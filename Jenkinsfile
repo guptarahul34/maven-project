@@ -27,5 +27,26 @@ pipeline{
 
         }
 
+        stage('Test'){
+            parallel{
+                stage('Test1'){
+                    steps{
+                        echo "This is stage test1"
+                    }
+                }
+
+                stage('Test2'){
+                    steps{
+                        echo "This is stage test2"
+                    }
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
+        }
+
     }
 }
