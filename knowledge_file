@@ -1,0 +1,42 @@
+
+
+
+withCredentials block to access aws cli
+
+withCredentials([usernamePassword(credentialsId: 'aws-cli', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                  sh '''
+                     # aws ec2 start-instances --instance-ids i-0520905212e116432
+                     aws ec2 stop-instances --instance-ids i-0520905212e116432
+                  '''
+                }
+                
+                
+                
+To Compile a code and build a jar file using - mvn clean package  command 
+
+mvn clean package - this is a command to create a jar file in java build
+
+archieve artifacts 
+
+archieveArtifacts artifacts: "**/target/*.war"
+
+** - means workspace directory
+target - it's exists inside workspace directory
+
+
+To use parameters inside pipeline stage use below syntax 
+
+pipeline{
+agent any
+parameters {
+string defaultValue: 'gupta', name: "LASTNAME"
+}
+environment{
+  NAME = "Rahul"
+}
+stages{
+   stage('Build'){
+     echo "$NAME ${params.LASTNAME}"
+   }
+}
+}
