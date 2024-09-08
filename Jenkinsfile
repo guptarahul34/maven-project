@@ -8,7 +8,7 @@ pipeline{
     }
 
     tools {
-        maven 'maven-build'
+        maven 'maven-build-demo'
     }
 
 
