@@ -3,8 +3,8 @@ pipeline{
         label 'DevServer'
     }
 
-    environment {
-        NAME = "Rahul"
+    parameters {
+        choice choices: ['dev', 'prod'], name: 'select_environment'
     }
 
     tools {
@@ -29,22 +29,44 @@ pipeline{
 
         stage('Test'){
             parallel{
-                stage('Test1'){
+                stage('Test-A'){
+                    agent { label 'DevServer' }
                     steps{
-                        echo "This is stage test1"
+                        echo "This is stage Test-A"
+                        sh 'mvn test'
                     }
                 }
 
-                stage('Test2'){
+                stage('Test-B'){
+                    agent { label 'DevServer' }
                     steps{
-                        echo "This is stage test2"
+                        echo "This is stage Test-B"
+                        sh 'mvn test'
                     }
                 }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '**/target/*.war'
+                    dir('webapp/target/*.war'){
+                        stash includes: '*.war', name: 'maven-stash'
+                    }
+                //archiveArtifacts artifacts: '**/target/*.war'
                 }
+            }
+        }
+
+        stage('Deploy_Dev'){
+            when { expression {params.select_environment == 'dev'}
+                beforeAgent true }
+            //agent { label 'DevServer' }
+            steps{
+                dir('/var/www/html'){
+                    unstash 'maven-stash'
+                }
+                sh '''
+                    cd /var/www/html
+                    jar -xvf webapp.war
+                '''
             }
         }
 
