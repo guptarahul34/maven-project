@@ -3,6 +3,11 @@ pipeline{
         label 'DevServer'
     }
 
+    environment {
+        NAME = "Rahul"
+    }
+
+
 
     stages{
         stage('Build'){
@@ -20,6 +25,7 @@ pipeline{
         stage('Test2'){
             steps{
                 echo 'Hello This is Test2 Stage'
+                echo "Variable value = $NAME"
             }
         }
     }
