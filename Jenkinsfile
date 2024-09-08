@@ -47,7 +47,7 @@ pipeline{
             }
             post {
                 success {
-                    dir('/webapp/target/*.war'){
+                    dir('webapp/target'){
                         stash includes: '*.war', name: 'maven-stash'
                     }
                 //archiveArtifacts artifacts: '**/target/*.war'
