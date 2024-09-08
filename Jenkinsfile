@@ -7,6 +7,11 @@ pipeline{
         NAME = "Rahul"
     }
 
+    tools {
+        maven 'maven-build'
+    }
+
+
 
 
     stages{
@@ -16,17 +21,5 @@ pipeline{
             }
         }
 
-        stage('Test1'){
-            steps{
-                echo 'Hello This is Test1 Stage'
-            }
-        }
-
-        stage('Test2'){
-            steps{
-                echo 'Hello This is Test2 Stage'
-                echo "Variable value = $NAME"
-            }
-        }
     }
 }
