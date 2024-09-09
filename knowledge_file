@@ -40,3 +40,7 @@ stages{
    }
 }
 }
+
+
+To write the build output artifact in workspace for later use
+writeFile file: "output/usefulfile.txt", text: "This file is useful, need to archive it."
